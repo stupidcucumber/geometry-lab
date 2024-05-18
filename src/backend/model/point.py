@@ -2,5 +2,5 @@ from pydantic import BaseModel
 
 
 class Point(BaseModel):
-    x: float
-    y: float
+    x: int
+    y: int

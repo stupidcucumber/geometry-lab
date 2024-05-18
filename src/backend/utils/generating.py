@@ -14,6 +14,7 @@ def generate_star_polygon(center: Point, n_vertices: int = 5, min_radius: float 
     delta_xs = np.cos(parameters_rad[0]) * parameters_rad[1]
     delta_ys = np.sin(parameters_rad[0]) * parameters_rad[1]
     points = [
-        Point(x=center.x + delta_x, y=center.y + delta_y) for delta_x, delta_y in zip(delta_xs, delta_ys)
+        Point(x=int(center.x + delta_x), y=int(center.y + delta_y))
+        for delta_x, delta_y in zip(delta_xs, delta_ys)
     ]
     return StarPolygon(points=points)
