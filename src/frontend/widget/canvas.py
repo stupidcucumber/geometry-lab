@@ -27,7 +27,6 @@ class Canvas(QLabel):
         pen.setWidth(width)
         pen.setColor(color)
         return pen
-    
         
     def _draw_point(self, pixmap: QPixmap, point: Point, color: Qt.GlobalColor) -> None:
         painter = QPainter(pixmap)
@@ -74,12 +73,12 @@ class Canvas(QLabel):
         self.setPixmap(pixmap)
         self.update()
         
-    def generate(self) -> None:
+    def generate(self, center_point: Point, min_radius: int = 50, max_radius: int = 300,
+                 n_vertices: int = 10) -> None:
         self.clear()
-        center_point = Point(x=600, y=300)
         polygon = generate_star_polygon(
             center=center_point,
-            n_vertices=20, min_radius=50, max_radius=300
+            n_vertices=n_vertices, min_radius=min_radius, max_radius=max_radius
         )
         self.points = polygon.points
         pixmap = self.pixmap()
@@ -97,6 +96,7 @@ class Canvas(QLabel):
             color=Qt.GlobalColor.black
         )
         self.setPixmap(pixmap)
+        
     
     def _setup_layout(self) -> None:
         canvas = QPixmap(self.canvas_width, self.canvas_height)

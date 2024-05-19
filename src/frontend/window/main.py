@@ -3,7 +3,8 @@ from PyQt6.QtGui import QMouseEvent
 from PyQt6.QtWidgets import (
     QMainWindow,
     QToolBar,
-    QHBoxLayout
+    QHBoxLayout,
+    QScrollArea
 )
 from ..widget import Controls, Canvas
 from ..utils import instantiate_box
@@ -14,7 +15,11 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__(parent, **kwargs)
         self.setWindowTitle('Biggest circle finder 🐦‍🔥')
         self.setGeometry(0, 0, width, height)
-        self.canvas = Canvas(parent=self, width=1200, height=700)
+        self.canvas = Canvas(parent=self, width=4000, height=4000)
+        self.scrollArea = QScrollArea(self)
+        self.scrollArea.setWidget(
+            self.canvas
+        )
         self.controls = Controls(canvas=self.canvas, parent=self)
         self._setup_layout()
         
@@ -27,9 +32,10 @@ class MainWindow(QMainWindow):
         toolbar = self._create_toolbar()
         self.addToolBar(toolbar)
         c_widget = instantiate_box(
-            widgets=[self.controls, self.canvas],
+            widgets=[self.controls, self.scrollArea],
             parent=self,
             layout=QHBoxLayout(self)
         )
         self.setCentralWidget(c_widget)
+        c_widget.resize(1400, 700)
         

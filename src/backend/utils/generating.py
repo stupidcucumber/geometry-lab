@@ -17,4 +17,4 @@ def generate_star_polygon(center: Point, n_vertices: int = 5, min_radius: float 
         Point(x=int(center.x + delta_x), y=int(center.y + delta_y))
         for delta_x, delta_y in zip(delta_xs, delta_ys)
     ]
-    return StarPolygon(points=points)
+    return StarPolygon(points=points, center=center)
