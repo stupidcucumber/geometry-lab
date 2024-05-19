@@ -1,10 +1,11 @@
+import numpy as np
 from pydantic import BaseModel
 from .point import Point
-from .circle import Circle
 
 
 class StarPolygon(BaseModel):
     points: list[Point]
+    center: Point | None = None
     
-    def find_biggest_circle(self) -> Circle:
-        pass
+    def asarray(self) -> np.ndarray:
+        return np.asarray([[point.x, point.y] for point in self.points])

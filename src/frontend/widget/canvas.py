@@ -27,6 +27,7 @@ class Canvas(QLabel):
         pen.setWidth(width)
         pen.setColor(color)
         return pen
+    
         
     def _draw_point(self, pixmap: QPixmap, point: Point, color: Qt.GlobalColor) -> None:
         painter = QPainter(pixmap)
@@ -46,6 +47,9 @@ class Canvas(QLabel):
             second_point.x, second_point.y
         )
         painter.end()
+    
+    def _draw_voroniy_diagram(self, polygon: StarPolygon, pixmap: QPixmap, color: Qt.GlobalColor) -> None:
+        pass
         
     def _draw_polygon(self, pixmap: QPixmap, polygon: StarPolygon) -> None:
         points = polygon.points
