@@ -5,7 +5,8 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QPushButton,
     QLabel,
-    QLineEdit
+    QLineEdit,
+    QCheckBox
 )
 from ...backend.model import Point
 from .canvas import Canvas
@@ -18,6 +19,10 @@ class Controls(QWidget):
         self.min_radius = 50
         self.max_radius = 500
         self.n_vertices = 10
+        self.checkbox = QCheckBox('Show all circles', self)
+        self.checkbox.stateChanged.connect(
+            lambda e: self.canvas.draw_all(e == 2)
+        )
         self._setup_layout()
         
     def _set_min_radius(self, input: str | int) -> None:
@@ -85,6 +90,7 @@ class Controls(QWidget):
                 ]
             )
         )
+        base_layout.addWidget(self.checkbox)
         base_layout.addWidget(
             self._create_button(
                 'Generate', self, 
@@ -92,7 +98,8 @@ class Controls(QWidget):
                     center_point=Point(x=500, y=500),
                     min_radius=self.min_radius,
                     max_radius=self.max_radius,
-                    n_vertices=self.n_vertices
+                    n_vertices=self.n_vertices,
+                    draw_all_circles=self.checkbox.isChecked()
                 ),
                 size=(200, 50)
             )
@@ -105,4 +112,3 @@ class Controls(QWidget):
             )
         )
         self.setMaximumWidth(200)
-        self.setLayout(base_layout)
