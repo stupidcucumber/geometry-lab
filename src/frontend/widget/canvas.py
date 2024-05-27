@@ -40,7 +40,7 @@ class Canvas(QLabel):
         painter.setPen(
             self._create_pen(width=1, color=color)
         )
-        painter.drawEllipse(point.x, point.y, 2, 2)
+        painter.drawEllipse(point.x-1, point.y-1, 2, 2)
         painter.end()
         
     def _draw_circle(self, pixmap: QPixmap, circle: Circle, color: Qt.GlobalColor) -> None:
