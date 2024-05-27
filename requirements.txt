@@ -1,4 +1,6 @@
-PyQt6
+pyvoronoi
 numpy
+fastapi
+uvicorn[standard]
 pydantic
-scipy
+shapely

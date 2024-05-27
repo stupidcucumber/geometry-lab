@@ -4,4 +4,4 @@ from .point import Point
 
 class Circle(BaseModel):
     center: Point
-    radius: float
+    radius: int

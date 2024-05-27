@@ -1,0 +1,10 @@
+services:
+  voroniy-backend-svc:
+    build: .
+    command: 
+      - "uvicorn"
+      - "server:api"
+      - "--host"
+      - "0.0.0.0"
+    ports:
+      - 8081:8000
