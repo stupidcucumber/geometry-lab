@@ -1,2 +1,2 @@
-from .controls import Controls
+from .controls import ControlsView
 from .canvas import Canvas

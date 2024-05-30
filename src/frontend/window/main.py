@@ -1,12 +1,11 @@
 from PyQt6.QtCore import QObject
-from PyQt6.QtGui import QMouseEvent
 from PyQt6.QtWidgets import (
     QMainWindow,
     QToolBar,
     QHBoxLayout,
     QScrollArea
 )
-from ..widget import Controls, Canvas
+from ..widget import ControlsView, Canvas
 from ..utils import instantiate_box
 
 
@@ -20,7 +19,7 @@ class MainWindow(QMainWindow):
         self.scrollArea.setWidget(
             self.canvas
         )
-        self.controls = Controls(canvas=self.canvas, parent=self)
+        self.controls = ControlsView(canvas=self.canvas, parent=self)
         self._setup_layout()
         
     def _create_toolbar(self) -> QToolBar:

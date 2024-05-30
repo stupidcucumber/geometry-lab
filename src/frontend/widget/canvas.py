@@ -25,6 +25,7 @@ class Canvas(QLabel):
         self.voronoi_vertices: list[Point] | None = None
         self.voronoi_circles: list[Circle] | None = None
         self.center_point: Point | None = None
+        self.points: list[Point] = []
         self._setup_layout()
         self.mouse_x: int = None
         self.mouse_y: int = None
@@ -82,18 +83,30 @@ class Canvas(QLabel):
             pixmap=pixmap,
             first_point=points[0], second_point=points[-1], color=Qt.GlobalColor.red
         )
-    
-    def clear(self) -> None:
+        
+    def erase_all(self) -> None:
         pixmap = self.pixmap()
         pixmap.fill(Qt.GlobalColor.white)
         self.setPixmap(pixmap)
         self.update()
-        
-    def generate(self, center_point: Point, min_radius: int = 50, max_radius: int = 300,
-                 n_vertices: int = 10, draw_all_circles: bool = False) -> None:
+    
+    def clear(self) -> None:
+        self.points.clear()
         self.voronoi_circles = None
         self.voronoi_vertices = None
         self.polygon = None
+        self.erase_all()
+        
+    def manual_find(self, draw_all_circles: bool = False) -> None:
+        self.polygon: StarPolygon = StarPolygon(points=self.points, center=None)
+        pixmap = self.pixmap()
+        self._draw_polygon(pixmap=pixmap, polygon=self.polygon)
+        self.setPixmap(pixmap)
+        self.draw_voronoi_circles(draw_all_circles=draw_all_circles)
+        
+    def generate(self, center_point: Point, min_radius: int = 50, max_radius: int = 300,
+                 n_vertices: int = 10, draw_all_circles: bool = False) -> None:
+        self.clear()
         self.center_point = center_point
         self.polygon = generate_star_polygon(
             center=self.center_point,
@@ -105,10 +118,11 @@ class Canvas(QLabel):
     def draw_all(self, draw_all_circles: bool = False) -> None:
         if not self.polygon:
             return
-        self.clear()
+        self.erase_all()
         pixmap = self.pixmap()
         self._draw_polygon(polygon=self.polygon, pixmap=pixmap)
-        self._draw_point(pixmap=pixmap, point=self.center_point,color=Qt.GlobalColor.green)
+        if self.center_point:
+            self._draw_point(pixmap=pixmap, point=self.center_point,color=Qt.GlobalColor.green)
         self.setPixmap(pixmap)
         self.draw_voronoi_verteces()
         self.draw_voronoi_circles(draw_all_circles=draw_all_circles)
@@ -150,7 +164,6 @@ class Canvas(QLabel):
             color=Qt.GlobalColor.black
         )
         self.setPixmap(pixmap)
-        
     
     def _setup_layout(self) -> None:
         canvas = QPixmap(self.canvas_width, self.canvas_height)
